@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac9caab7239d9794bc2e87822b55b82c",
+    "content-hash": "95326fd85e01213c3a4db99abd12e895",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -644,16 +644,16 @@
         },
         {
             "name": "onyx/core",
-            "version": "dev-master",
+            "version": "dev-cqs-commands",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Onyx-org/core.git",
-                "reference": "0b9a618a341de298004b30476edef71a0f401402"
+                "reference": "8ff9480b350860f4fbfad6175bde9d4fc53c5094"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Onyx-org/core/zipball/0b9a618a341de298004b30476edef71a0f401402",
-                "reference": "0b9a618a341de298004b30476edef71a0f401402",
+                "url": "https://api.github.com/repos/Onyx-org/core/zipball/8ff9480b350860f4fbfad6175bde9d4fc53c5094",
+                "reference": "8ff9480b350860f4fbfad6175bde9d4fc53c5094",
                 "shasum": ""
             },
             "require": {
@@ -681,7 +681,7 @@
                 "MIT"
             ],
             "description": "Onyx library for Onyx skeleton",
-            "time": "2017-05-26 09:28:01"
+            "time": "2017-05-26 11:34:05"
         },
         {
             "name": "paragonie/random_compat",
