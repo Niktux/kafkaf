@@ -9,15 +9,19 @@ use Onyx\Services\CQS\QueryHandler;
 use Onyx\Services\CQS\QueryResult;
 use Niktux\Kafkaf\Domain\Absences\AbsenceProviderCollection;
 use Niktux\Kafkaf\Domain\Absences\AbsenceCollection;
+use Niktux\Kafkaf\Persistence\CollaborateurRepository;
+use Niktux\Kafkaf\Domain\Absences\CollaborateurAbsenceFilterIterator;
 
 class Handler implements QueryHandler
 {
     private
-        $providers;
+        $providers,
+        $collaborateurRepository;
 
-    public function __construct(AbsenceProviderCollection $providers)
+    public function __construct(AbsenceProviderCollection $providers, CollaborateurRepository $repository)
     {
         $this->providers = $providers;
+        $this->collaborateurRepository = $repository;
     }
 
     public function accept(Query $query): bool
@@ -36,6 +40,17 @@ class Handler implements QueryHandler
             );
         }
 
-        return new Result($absences);
+        $collaborateurs = $this->collaborateurRepository->findAll();
+        $result = new Result();
+
+        foreach($collaborateurs as $collaborateur)
+        {
+            $result->add(
+                $collaborateur,
+                new CollaborateurAbsenceFilterIterator($absences, $collaborateur->uuid())
+            );
+        }
+
+        return $result;
     }
 }

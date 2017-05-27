@@ -12,4 +12,5 @@ interface Absence extends ConvertibleToString
     public function to(): \DateTimeImmutable;
 
     public function duration(): int;
+    public function description(): string;
 }

@@ -20,7 +20,7 @@ class Provider implements ServiceProviderInterface
         };
 
         $container['query.handlers.caf_cafquery'] = function($c) {
-            return new CAF\Handler($c['absenceProviders']);
+            return new CAF\Handler($c['absenceProviders'], $c['repository.collaborateur']);
         };
     }
 }

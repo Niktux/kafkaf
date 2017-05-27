@@ -4,8 +4,28 @@
 <div class="starter-template">
 </div>
 
-{% for absence in result.absences %}
-    {{absence.duration}} => {{ absence }}<br>
+{% for row in result.absences %}
+    <h2>{{ row.collaborateur }}</h2>
+    <table class="table">
+    	<thead class="thead-inverse">
+        <tr>
+            <th>Durée (jours)</th>
+            <th>Début</th>
+            <th>Fin</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+    {% for absence in row.absences %}
+        <tr>
+            <td>{{ absence.duration }}</td>
+            <td>{{ absence.from|date("d/m/Y") }}</td>
+            <td>{{ absence.to|date("d/m/Y") }}</td>
+            <td>{{ absence.description }}</td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
 {% endfor %}
 
 {% endblock %}

@@ -37,6 +37,11 @@ class AbsenceCollective implements Absence
         return iterator_count($period);
     }
 
+    public function description(): string
+    {
+        return $this->description;
+    }
+
     public function __toString()
     {
         return sprintf(

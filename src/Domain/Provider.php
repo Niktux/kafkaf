@@ -19,10 +19,14 @@ class Provider implements ServiceProviderInterface
             return new Conges($c['repository.conge']);
         };
 
+        $container['JoursFeriesProvider'] = function ($c) {
+            return new JoursFeries();
+        };
+
         $container['absenceProviders'] = function ($c) {
             return new AbsenceProviderCollection([
-                new Naomix(),
-                new JoursFeries(),
+                new Naomix($c['JoursFeriesProvider']),
+                $c['JoursFeriesProvider'],
                 $c['congeProvider'],
             ]);
         };

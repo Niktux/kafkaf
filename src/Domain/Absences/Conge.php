@@ -34,6 +34,11 @@ class Conge implements Absence
         return $this->dto->load('collaborateur');
     }
 
+    public function collaborateurUuid(): string
+    {
+        return $this->dto->collaborateurUuid;
+    }
+
     public function from(): \DateTimeImmutable
     {
         return $this->dto->from;
@@ -60,6 +65,11 @@ class Conge implements Absence
         }
 
         return $days;
+    }
+
+    public function description(): string
+    {
+        return "Congé";
     }
 
     public function persist(CongeRepository $repository)

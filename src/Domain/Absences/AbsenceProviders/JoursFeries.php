@@ -40,43 +40,42 @@ class JoursFeries implements AbsenceProvider, JoursFeriesProvider
 
         $timestamps = [
             // Dates fixes
-            mktime(0, 0, 0, 1,  1,  $year),  // 1er janvier
-            mktime(0, 0, 0, 5,  1,  $year),  // Fête du travail
-            mktime(0, 0, 0, 5,  8,  $year),  // Victoire des alliés
-            mktime(0, 0, 0, 7,  14, $year),  // Fête nationale
-            mktime(0, 0, 0, 8,  15, $year),  // Assomption
-            mktime(0, 0, 0, 11, 1,  $year),  // Toussaint
-            mktime(0, 0, 0, 11, 11, $year),  // Armistice
-            mktime(0, 0, 0, 12, 25, $year),  // Noel
+            "Jour de l'an" => mktime(0, 0, 0, 1,  1,  $year),
+            "Fête du travail" => mktime(0, 0, 0, 5,  1,  $year),
+            "8 mai" => mktime(0, 0, 0, 5,  8,  $year),
+            "Fête nationale" => mktime(0, 0, 0, 7,  14, $year),
+            "Assomption" => mktime(0, 0, 0, 8,  15, $year),
+            "Toussaint" => mktime(0, 0, 0, 11, 1,  $year),
+            "Armistice" => mktime(0, 0, 0, 11, 11, $year),
+            "Noël" => mktime(0, 0, 0, 12, 25, $year),
 
             // Dates variables
-            mktime(0, 0, 0, $easterMonth, $easterDay + 1,  $year),
-            mktime(0, 0, 0, $easterMonth, $easterDay + 39, $year),
-            mktime(0, 0, 0, $easterMonth, $easterDay + 50, $year),
+            "Pâques" => mktime(0, 0, 0, $easterMonth, $easterDay + 1,  $year),
+            "Ascension" => mktime(0, 0, 0, $easterMonth, $easterDay + 39, $year),
+            "Pentecôte" => mktime(0, 0, 0, $easterMonth, $easterDay + 50, $year),
         ];
 
         $days = [];
 
-        foreach($timestamps as $ts)
+        foreach($timestamps as $description => $ts)
         {
-            $days[] = \DateTimeImmutable::createFromFormat('U', (string) $ts);
+            $days[$description] = \DateTimeImmutable::createFromFormat('U', (string) $ts);
         }
 
         return $days;
-
     }
 
     public function list(int $weekFrom, int $weekTo): AbsenceCollection
     {
         $collection = new AbsenceCollection();
 
-        foreach($this->getForYear($this->currentYear) as $day)
+        foreach($this->getForYear($this->currentYear) as $description => $day)
         {
             $week = (int) $day->format('W');
 
             if(($week >= $weekFrom && $week <= $weekTo) && $this->isAWorkingDay($day))
             {
-                $collection->addAbsence(new AbsenceCollective($day, $day, "Jour férié"));
+                $collection->addAbsence(new AbsenceCollective($day, $day, $description));
             }
         }
 
