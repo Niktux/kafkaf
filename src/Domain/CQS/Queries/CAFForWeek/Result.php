@@ -32,7 +32,8 @@ final class Result implements QueryResult
         $this->absences[$collaborateur->uuid()] = [
             'collaborateur' => $collaborateur,
             'absences' => $absences,
-            'caf' => 5 - $absencesDuration
+            'caf' => 5 - $absencesDuration,
+            'totalAbsences' => $absencesDuration,
         ];
 
         return $this;

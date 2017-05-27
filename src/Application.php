@@ -62,5 +62,7 @@ class Application extends \Onyx\Application
         $this->mount('/', new Controllers\Home\Provider());
         $this->mount('/absences', new Controllers\Absence\Provider());
         $this->mount('/report', new Controllers\Report\Provider());
+        $this->mount('/collaborateur', new Controllers\Collaborateur\Provider());
+
     }
 }

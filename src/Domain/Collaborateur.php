@@ -6,6 +6,7 @@ namespace Niktux\Kafkaf\Domain;
 
 use Puzzle\Pieces\ConvertibleToString;
 use Niktux\Kafkaf\Persistence\DataTransferObjects as DTO;
+use Niktux\Kafkaf\Persistence\CollaborateurRepository;
 
 class Collaborateur implements ConvertibleToString
 {
@@ -35,6 +36,11 @@ class Collaborateur implements ConvertibleToString
     private function email(): string
     {
         return $this->dto->email;
+    }
+
+    public function persist(CollaborateurRepository $repository)
+    {
+        $repository->save($this->dto);
     }
 
     public function __toString()

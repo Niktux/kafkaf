@@ -55,6 +55,27 @@ class Collaborateur implements CollaborateurRepository
         return $collection;
     }
 
+    public function save(DTO\Collaborateur $dto): void
+    {
+        // FIXME TODO handle unique violation errors
+
+        $this->db->insert(
+            self::TABLE_NAME,
+            [
+                'uuid' => $dto->uuid,
+                'nom' => $dto->nom,
+                'prenom' => $dto->prenom,
+                'email' => $dto->email,
+            ],
+            [
+                \PDO::PARAM_STR,
+                \PDO::PARAM_STR,
+                \PDO::PARAM_STR,
+                \PDO::PARAM_STR,
+            ]
+        );
+    }
+
     private function buildDomainObject(array $row): Domain\Collaborateur
     {
         $dto = $this->buildDTOObject($row);

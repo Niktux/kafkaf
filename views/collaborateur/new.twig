@@ -1,0 +1,32 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+
+<br>
+
+<form method="post" submit="{{ path('collaborateur.post') }}">
+    
+    <div class="form-group row">
+      <label for="prenom" class="col-3 col-form-label">Prenom</label>
+      <div class="col-9">
+        <input class="form-control" type="text" value="" id="prenom" name="prenom" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="nom" class="col-3 col-form-label">Nom</label>
+      <div class="col-9">
+        <input class="form-control" type="text" value="" id="nom" name="nom" required>
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label for="email" class="col-3 col-form-label">Prenom</label>
+      <div class="col-9">
+        <input class="form-control" type="text" value="@naoned.fr" id="email" name="email" required>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Créer le collaborateur</button>
+</form>
+
+{% endblock %}

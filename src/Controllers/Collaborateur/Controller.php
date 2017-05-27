@@ -1,15 +1,16 @@
 <?php
 
-namespace Niktux\Kafkaf\Controllers\Absence;
+declare(strict_types = 1);
+
+namespace Niktux\Kafkaf\Controllers\Collaborateur;
 
 use Onyx\Traits;
 use Symfony\Component\HttpFoundation\Response;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\NullLogger;
-use Onyx\Services\CQS\QueryBuses\NullQueryBus;
 use Onyx\Services\CQS\CommandBuses\NullCommandBus;
-use Niktux\Kafkaf\Domain\CQS\Queries\AllCollaborateurs\AllCollaborateursQuery;
-use Niktux\Kafkaf\Domain\CQS\Commands\NewAbsence\NewAbsenceCommand;
+use Onyx\Services\CQS\QueryBuses\NullQueryBus;
+use Niktux\Kafkaf\Domain\CQS\Commands\NewCollaborateur\NewCollaborateurCommand;
 
 class Controller
 {
@@ -30,10 +31,7 @@ class Controller
 
     public function formNewAction(): Response
     {
-        $query = new AllCollaborateursQuery();
-        $result = $this->queryBus->send($query);
-
-        return $this->renderResult('absence/new.twig', $result);
+        return $this->render('collaborateur/new.twig');
     }
 
     public function newAction(): Response
@@ -42,15 +40,15 @@ class Controller
 
         $postParameters = $this->request->request->all();
 
-        $command = new NewAbsenceCommand();
+        $command = new NewCollaborateurCommand();
 
-        $command->collaborateurUuid = $postParameters['collaborateur'];
-        $command->from = \DateTimeImmutable::createFromFormat('Y-m-d', $postParameters['from']);
-        $command->to = \DateTimeImmutable::createFromFormat('Y-m-d', $postParameters['to']);
+        $command->nom = $postParameters['nom'];
+        $command->prenom = $postParameters['prenom'];
+        $command->email = $postParameters['email'];
 
         $this->commandBus->send($command);
 
-        $this->addSuccessFlash('Demande de congé enregistrée');
+        $this->addSuccessFlash('Collaborateur créé');
 
         return $this->redirect('home');
     }
