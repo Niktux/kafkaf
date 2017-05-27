@@ -14,7 +14,7 @@ RUN apt-get update && \
 
 RUN pecl install xdebug && \
     docker-php-ext-enable xdebug && \
-    docker-php-ext-install pdo_mysql
+    docker-php-ext-install pdo_mysql calendar
 
 ADD bootstrap.sh /root/bootstrap.sh
 

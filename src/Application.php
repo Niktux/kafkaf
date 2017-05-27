@@ -21,7 +21,9 @@ class Application extends \Onyx\Application
         $this->register(new Providers\Webpack());
         $this->register(new Providers\DBAL());
 
+        $this->register(new Domain\Provider());
         $this->register(new Persistence\Provider());
+
         $this->register(new Domain\CQS\Queries\Provider());
         $this->register(new Domain\CQS\Commands\Provider());
 
@@ -59,5 +61,6 @@ class Application extends \Onyx\Application
     {
         $this->mount('/', new Controllers\Home\Provider());
         $this->mount('/absences', new Controllers\Absence\Provider());
+        $this->mount('/report', new Controllers\Report\Provider());
     }
 }

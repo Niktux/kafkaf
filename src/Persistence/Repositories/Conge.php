@@ -4,17 +4,18 @@ declare(strict_types = 1);
 
 namespace Niktux\Kafkaf\Persistence\Repositories;
 
-use Niktux\Kafkaf\Persistence\AbsenceRepository;
+use Niktux\Kafkaf\Persistence\CongeRepository;
 use Niktux\Kafkaf\Persistence\DataTransferObjects as DTO;
 use Niktux\Kafkaf\Domain\Absences as Domain;
 use Doctrine\DBAL\Driver\Connection;
 use Onyx\Persistence\DTOHydrators\ByField;
 use Onyx\Persistence\Fields;
 use Niktux\Kafkaf\Persistence\CollaborateurRepository;
+use Niktux\Kafkaf\Domain\Absences\AbsenceCollection;
 
-class Absence implements AbsenceRepository
+class Conge implements CongeRepository
 {
-    private const TABLE_NAME = 'absences';
+    private const TABLE_NAME = 'conges';
 
     private
         $db,
@@ -26,16 +27,16 @@ class Absence implements AbsenceRepository
         $this->collaborateurRepository = $collaborateurRepository;
     }
 
-    public function find(string $uuid): ?Domain\Absence
+    public function find(string $uuid): ?Domain\Conge
     {
         $statement = $this->db->executeQuery(
             sprintf("SELECT * FROM %s WHERE uuid = ?", self::TABLE_NAME),
             [$uuid]
         );
 
-        $row= $statement->fetch();
+        $row = $statement->fetch();
 
-        if($row=== false)
+        if($row === false)
         {
             return null;
         }
@@ -43,7 +44,28 @@ class Absence implements AbsenceRepository
         return $this->buildDomainObject($row);
     }
 
-    public function save(DTO\Absence $dto): void
+    public function findByPeriod(\DateTimeImmutable $from, \DateTimeImmutable $to): AbsenceCollection
+    {
+        $statement = $this->db->executeQuery(
+            sprintf("SELECT * FROM %s WHERE dateFrom >= ? AND dateFrom <= ?", self::TABLE_NAME),
+            [
+                $from->format('Y-m-d 00:00:00'),
+                $to->format('Y-m-d 23:59:59'),
+            ]
+        );
+
+        $rows = $statement->fetchAll();
+        $collection = new AbsenceCollection();
+
+        foreach($rows as $row)
+        {
+            $collection->addAbsence($this->buildDomainObject($row));
+        }
+
+        return $collection;
+    }
+
+    public function save(DTO\Conge $dto): void
     {
         // FIXME TODO handle unique violation errors
 
@@ -64,7 +86,7 @@ class Absence implements AbsenceRepository
         );
     }
 
-    private function buildDomainObject(array $row): Domain\Absence
+    private function buildDomainObject(array $row): Domain\Conge
     {
         $dto = $this->buildDTOObject($row);
 
@@ -72,10 +94,10 @@ class Absence implements AbsenceRepository
             return $this->collaborateurRepository->find($dto->collaborateurUuid);
         });
 
-        return new Domain\Absence($dto);
+        return new Domain\Conge($dto);
     }
 
-    private function buildDTOObject(array $row): DTO\Absence
+    private function buildDTOObject(array $row): DTO\Conge
     {
         $fields = [
             'uuid' => new Fields\NotNullable(new Fields\StringField('uuid')),
@@ -85,7 +107,10 @@ class Absence implements AbsenceRepository
         ];
 
         $hydrator = new ByField($fields);
-        $dto = $hydrator->hydrate(new DTO\Absence(), $row);
+        $dto = $hydrator->hydrate(new DTO\Conge(), $row);
+
+        $dto->from = \DateTimeImmutable::createFromMutable($dto->from);
+        $dto->to = \DateTimeImmutable::createFromMutable($dto->to);
 
         return $dto;
     }

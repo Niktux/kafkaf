@@ -7,7 +7,7 @@ namespace Niktux\Kafkaf\Persistence\DataTransferObjects;
 use Onyx\Persistence\DataTransferObjects\Related;
 use Onyx\Persistence\DataTransferObject;
 
-class Absence extends Related implements DataTransferObject
+class Conge extends Related implements DataTransferObject
 {
     public
         $uuid,

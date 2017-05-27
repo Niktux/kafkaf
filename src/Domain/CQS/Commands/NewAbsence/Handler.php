@@ -6,22 +6,22 @@ namespace Niktux\Kafkaf\Domain\CQS\Commands\NewAbsence;
 
 use Niktux\Kafkaf\Persistence\CollaborateurRepository;
 use Onyx\Services\CQS\CommandHandler;
-use Niktux\Kafkaf\Persistence\AbsenceRepository;
 use Onyx\Services\CQS\Command;
 use Niktux\Kafkaf\Persistence\DataTransferObjects as DTO;
 use Niktux\Kafkaf\Domain\Collaborateur;
 use Niktux\Kafkaf\Domain\Absences as Domain;
 use Ramsey\Uuid\Uuid;
+use Niktux\Kafkaf\Persistence\CongeRepository;
 
 class Handler implements CommandHandler
 {
     private
-        $absenceRepository,
+        $congeRepository,
         $collaborateurRepository;
 
-    public function __construct(AbsenceRepository $absenceRepository, CollaborateurRepository $collaborateurRepository)
+    public function __construct(CongeRepository $congeRepository, CollaborateurRepository $collaborateurRepository)
     {
-        $this->absenceRepository = $absenceRepository;
+        $this->congeRepository = $congeRepository;
         $this->collaborateurRepository = $collaborateurRepository;
     }
 
@@ -39,13 +39,13 @@ class Handler implements CommandHandler
             throw new \InvalidArgumentException("Collaborateur $command->collaborateurUuid does not exist");
         }
 
-        $dto = new DTO\Absence();
+        $dto = new DTO\Conge();
         $dto->uuid = Uuid::uuid4()->toString();
         $dto->collaborateurUuid = $command->collaborateurUuid;
         $dto->from = $command->from;
         $dto->to = $command->to;
 
-        $absence = new Domain\Absence($dto);
-        $absence->persist($this->absenceRepository);
+        $conge = new Domain\Conge($dto);
+        $conge->persist($this->congeRepository);
     }
 }

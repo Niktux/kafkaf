@@ -12,7 +12,7 @@ class Provider implements ServiceProviderInterface
     public function register(Container $container)
     {
         $container['command.handlers.newabsence_newabsencecommand'] = function($c) {
-            return new NewAbsence\Handler($c['repository.absence'], $c['repository.collaborateur']);
+            return new NewAbsence\Handler($c['repository.conge'], $c['repository.collaborateur']);
         };
     }
 }

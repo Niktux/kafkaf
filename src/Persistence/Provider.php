@@ -15,8 +15,8 @@ class Provider implements ServiceProviderInterface
             return new Repositories\Collaborateur($c['db']);
         };
 
-        $container['repository.absence'] = function ($c) {
-            return new Repositories\Absence($c['db'], $c['repository.collaborateur']);
+        $container['repository.conge'] = function ($c) {
+            return new Repositories\Conge($c['db'], $c['repository.collaborateur']);
         };
     }
 }

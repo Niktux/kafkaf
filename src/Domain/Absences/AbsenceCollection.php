@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Niktux\Kafkaf\Domain\Absences;
 
-class AbsenceCollection implements \IteratorAggregate
+class AbsenceCollection implements \IteratorAggregate, \Countable
 {
     private
         $absences;
@@ -32,5 +32,29 @@ class AbsenceCollection implements \IteratorAggregate
     public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->absences);
+    }
+
+    public function mergeWith(self $collection): self
+    {
+        $allProviders = array_merge($this->absences, iterator_to_array($collection));
+
+        return new self($allProviders);
+    }
+
+    public function count(): int
+    {
+        return count($this->absences);
+    }
+
+    public function totalDuration(): int
+    {
+        $duration = 0;
+
+        foreach($this->absences as $absence)
+        {
+            $duration += $absence->duration();
+        }
+
+        return $duration;
     }
 }
