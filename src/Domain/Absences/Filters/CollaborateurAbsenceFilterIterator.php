@@ -2,7 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Niktux\Kafkaf\Domain\Absences;
+namespace Niktux\Kafkaf\Domain\Absences\Filters;
+
+use Niktux\Kafkaf\Domain\Absences\AbsenceCollection;
+use Niktux\Kafkaf\Domain\Absences\AbsenceCollective;
+use Niktux\Kafkaf\Domain\Absences\Conge;
 
 class CollaborateurAbsenceFilterIterator extends \FilterIterator
 {

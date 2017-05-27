@@ -6,9 +6,9 @@ namespace Niktux\Kafkaf\Domain\Absences\AbsenceProviders;
 
 use Niktux\Kafkaf\Domain\Absences\AbsenceProvider;
 use Niktux\Kafkaf\Domain\Absences\AbsenceCollection;
-use Niktux\Kafkaf\Domain\Absences\AbsenceCollective;
 use Niktux\Kafkaf\Services\WorkingDayAware;
 use Niktux\Kafkaf\Domain\Absences\JoursFeriesProvider;
+use Niktux\Kafkaf\Domain\Absences\JourFerie;
 
 class JoursFeries implements AbsenceProvider, JoursFeriesProvider
 {
@@ -75,7 +75,7 @@ class JoursFeries implements AbsenceProvider, JoursFeriesProvider
 
             if(($week >= $weekFrom && $week <= $weekTo) && $this->isAWorkingDay($day))
             {
-                $collection->addAbsence(new AbsenceCollective($day, $day, $description));
+                $collection->addAbsence(new JourFerie($day, $day, $description));
             }
         }
 

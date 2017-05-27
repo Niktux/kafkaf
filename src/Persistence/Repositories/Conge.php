@@ -74,8 +74,8 @@ class Conge implements CongeRepository
             [
                 'uuid' => $dto->uuid,
                 'collaborateur' => $dto->collaborateurUuid,
-                'dateFrom' => $dto->from->format('Y-m-d H:i:s'),
-                'dateTo' => $dto->to->format('Y-m-d H:i:s'),
+                'dateFrom' => $dto->from->format('Y-m-d 00:00:00'),
+                'dateTo' => $dto->to->format('Y-m-d 00:00:00'),
             ],
             [
                 \PDO::PARAM_STR,
@@ -109,8 +109,8 @@ class Conge implements CongeRepository
         $hydrator = new ByField($fields);
         $dto = $hydrator->hydrate(new DTO\Conge(), $row);
 
-        $dto->from = \DateTimeImmutable::createFromMutable($dto->from);
-        $dto->to = \DateTimeImmutable::createFromMutable($dto->to);
+        $dto->from = \DateTimeImmutable::createFromMutable($dto->from->setTime(0, 0));
+        $dto->to = \DateTimeImmutable::createFromMutable($dto->to->setTime(0, 0));
 
         return $dto;
     }

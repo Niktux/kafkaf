@@ -4,10 +4,18 @@
 <div class="starter-template">
 </div>
 
-<h1>Absences semaine {{ result.query.from }} à semaine {{ result.query.to }}</h1>
+<h1>
+	Semaine {{ result.week }}
+	<small class="text-muted"><i>({{ result.dates }})</i></small>
+</h1>
+<a class="btn btn-info" href="{{ path('report.cafForWeek', {'week': result.week - 1}) }}" role="button"> &lt; Semaine Précédente</a>
+<a class="btn btn-info" href="{{ path('report.cafForWeek', {'week': result.week + 1}) }}" role="button">Semaine suivante &gt; </a>
+
+
+<hr>
 
 {% for row in result.absences %}
-    <h2>{{ row.collaborateur }}</h2>
+    <h3>{{ row.collaborateur }} ({{ row.caf }} jour{% if row.caf > 1 %}s{% endif %})</h3>
     <table class="table table-striped">
     	<thead class="thead-inverse">
         <tr>
@@ -29,5 +37,9 @@
         </tbody>
     </table>
 {% endfor %}
+
+<hr>
+
+<h2>Total CAF : {{ result.totalCAF }} jours</h2>
 
 {% endblock %}

@@ -30,6 +30,12 @@ class Provider implements ControllerProviderInterface
             ->assert('to', '\d+')
             ->bind('report.caf');
 
+        $controllers
+            ->match('/caf/week/{week}', 'controller.report:cafFroWeekAction')
+            ->method('GET')
+            ->assert('week', '\d+')
+            ->bind('report.cafForWeek');
+
         return $controllers;
     }
 }

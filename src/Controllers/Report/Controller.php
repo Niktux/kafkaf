@@ -9,6 +9,7 @@ use Psr\Log\NullLogger;
 use Onyx\Services\CQS\QueryBuses\NullQueryBus;
 use Onyx\Services\CQS\CommandBuses\NullCommandBus;
 use Niktux\Kafkaf\Domain\CQS\Queries\CAF\CAFQuery;
+use Niktux\Kafkaf\Domain\CQS\Queries\CAFForWeek\CAFForWeekQuery;
 
 class Controller
 {
@@ -29,9 +30,15 @@ class Controller
 
     public function cafAction(int $from, int $to): Response
     {
-        $query = new CAFQuery($from, $to);
-        $result = $this->queryBus->send($query);
+        $result = $this->queryBus->send(new CAFQuery($from, $to));
 
         return $this->renderResult('report/caf.twig', $result);
+    }
+
+    public function cafFroWeekAction(int $week): Response
+    {
+        $result = $this->queryBus->send(new CAFForWeekQuery($week));
+
+        return $this->renderResult('report/cafForWeek.twig', $result);
     }
 }

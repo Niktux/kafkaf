@@ -22,5 +22,9 @@ class Provider implements ServiceProviderInterface
         $container['query.handlers.caf_cafquery'] = function($c) {
             return new CAF\Handler($c['absenceProviders'], $c['repository.collaborateur']);
         };
+
+        $container['query.handlers.cafforweek_cafforweekquery'] = function($c) {
+            return new CAFForWeek\Handler($c['absenceProviders'], $c['repository.collaborateur']);
+        };
     }
 }

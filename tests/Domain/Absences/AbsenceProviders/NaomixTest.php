@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Niktux\Kafkaf\Domain\Absences\AbsenceProviders;
 
 use PHPUnit\Framework\TestCase;

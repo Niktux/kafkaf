@@ -13,4 +13,6 @@ interface Absence extends ConvertibleToString
 
     public function duration(): int;
     public function description(): string;
+
+    public function restrictToWeek(int $week): Absence;
 }

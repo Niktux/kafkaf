@@ -10,7 +10,7 @@ use Niktux\Kafkaf\Persistence\CongeRepository;
 use Niktux\Kafkaf\Services\WorkingDayAware;
 use Niktux\Kafkaf\Domain\Absences\AbsenceProviders\JoursFeries;
 
-class Conge implements Absence
+class Conge extends AbstractAbsence implements Absence
 {
     private const DATE_FORMAT = 'd-m-Y';
 
@@ -86,5 +86,15 @@ class Conge implements Absence
             $this->to()->format(self::DATE_FORMAT),
             $this->duration()
         );
+    }
+
+    protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end)
+    {
+        $dto = clone $this->dto;
+        $dto->from = $start;
+        $dto->to = $end;
+        $dto->uuid = "Part of " . $this->dto->uuid;
+
+        return new self($dto);
     }
 }
