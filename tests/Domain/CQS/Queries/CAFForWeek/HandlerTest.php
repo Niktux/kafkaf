@@ -6,13 +6,13 @@ namespace Niktux\Kafkaf\Domain\CQS\Queries\CAFForWeek;
 
 use PHPUnit\Framework\TestCase;
 use Niktux\Kafkaf\Domain\Absences\AbsenceProvider;
-use Niktux\Kafkaf\Persistence\CollaborateurRepository;
 use Niktux\Kafkaf\Domain\CollaborateurCollection;
 use Niktux\Kafkaf\Domain\Collaborateur;
 use Niktux\Kafkaf\Persistence\DataTransferObjects as DTO;
 use Niktux\Kafkaf\Domain\Absences\AbsenceProviderCollection;
 use Niktux\Kafkaf\Domain\Absences\AbsenceCollection;
 use Niktux\Kafkaf\Domain\Absences\Conge;
+use Niktux\Kafkaf\Persistence\ReadableCollaborateurRepository;
 
 class HandlerTest extends TestCase
 {
@@ -53,7 +53,7 @@ class HandlerTest extends TestCase
 
         $providers = new AbsenceProviderCollection([$provider]);
 
-        $repository = new class($toto, $cloud) implements CollaborateurRepository
+        $repository = new class($toto, $cloud) implements ReadableCollaborateurRepository
         {
             public function __construct($toto, $cloud) { $this->toto = $toto; $this->cloud = $cloud; }
 

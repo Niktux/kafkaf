@@ -13,6 +13,7 @@ use Niktux\Kafkaf\Persistence\CollaborateurRepository;
 use Niktux\Kafkaf\Domain\Absences\Filters\CollaborateurAbsenceFilterIterator;
 use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceForWeek;
 use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceDeduplicate;
+use Niktux\Kafkaf\Persistence\ReadableCollaborateurRepository;
 
 class Handler implements QueryHandler
 {
@@ -20,7 +21,7 @@ class Handler implements QueryHandler
         $providers,
         $collaborateurRepository;
 
-    public function __construct(AbsenceProviderCollection $providers, CollaborateurRepository $repository)
+    public function __construct(AbsenceProviderCollection $providers, ReadableCollaborateurRepository $repository)
     {
         $this->providers = $providers;
         $this->collaborateurRepository = $repository;
