@@ -26,6 +26,7 @@ final class Result implements QueryResult
     public function add(Collaborateur $collaborateur, iterable $absences): self
     {
         $absencesDuration = 0;
+
         foreach($absences as $absence)
         {
             $absencesDuration += $absence->duration();

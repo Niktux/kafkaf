@@ -15,6 +15,7 @@ use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceForWeek;
 use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceDeduplicate;
 use Niktux\Kafkaf\Persistence\ReadableCollaborateurRepository;
 use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceCollectiveFilterIterator;
+use Niktux\Kafkaf\Domain\Absences\Filters\ExcludeAbsenceCollectiveFilterIterator;
 
 class Handler implements QueryHandler
 {

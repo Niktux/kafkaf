@@ -44,7 +44,7 @@
 {% if result.collectives is not empty %}
 <div class="row" style="margin-bottom: 15px">
     <div class="col">
-        <h4>Absences Collectives</h4>
+        <h4>Absences collectives</h4>
     </div>
 </div>
 <div class="row">
@@ -74,14 +74,14 @@
 {% endif %}
 <div class="row" style="margin-bottom: 15px">
     <div class="col">
-        <h4>Absences</h4>
+        <h4>Absences personnelles</h4>
     </div>
 </div>
 <div class="row">
     <div class="col">
     {% for row in result.absences %}
         {% if row.absencesPerso is not empty %}
-            <h6>{{ row.collaborateur }} (absent {{ row.totalAbsences }} jour{% if row.totalAbsences > 1 %}s{% endif %})</h6>
+            <h6>{{ row.collaborateur }} (absent {{ row.totalAbsences }} jour{% if row.totalAbsences > 1 %}s{% endif %} en tout)</h6>
             <table class="table table-striped table-sm" style="margin-bottom: 30px">
                 <thead class="thead-inverse">
                 <tr>

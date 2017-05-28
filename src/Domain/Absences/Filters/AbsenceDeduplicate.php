@@ -14,7 +14,7 @@ class AbsenceDeduplicate
         $filteredCollection = new AbsenceCollection();
 
         $conges = new CongeFilterIterator($iterator);
-        $collectives = new AbsenceCollectiveFilterIterator($iterator, true);
+        $collectives = new AbsenceCollectiveFilterIterator($iterator, false);
 
         foreach($collectives as $collective)
         {
