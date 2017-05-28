@@ -35,4 +35,14 @@ class NullAbsence implements Absence
     {
         return "Ceci n'est pas une absence (si si j'insiste !)";
     }
+
+    public function isPartial(): bool
+    {
+        return false;
+    }
+
+    public function declareAsPartial(): self
+    {
+        throw new \LogicException(__CLASS__ . " cannot be partial");
+    }
 }

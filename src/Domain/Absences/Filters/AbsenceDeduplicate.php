@@ -9,7 +9,7 @@ use Niktux\Kafkaf\Domain\Absences\NullAbsence;
 
 class AbsenceDeduplicate
 {
-    public static function filter(\Iterator $iterator)
+    public static function filter(\Iterator $iterator): AbsenceCollection
     {
         $filteredCollection = new AbsenceCollection();
 

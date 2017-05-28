@@ -19,6 +19,8 @@ class AbsenceCollective extends AbstractAbsence implements Absence
 
     public function __construct(\DateTimeImmutable $from, \DateTimeImmutable $to, string $description)
     {
+        parent::__construct();
+
         $this->from = $from;
         $this->to = $to;
         $this->description = $description;
@@ -84,13 +86,19 @@ class AbsenceCollective extends AbstractAbsence implements Absence
 
         if($this->from < $absence->from())
         {
-            return new self($this->from, $absence->from()->modify('-1 day'), "Part of " . $this->description());
+            $absencePart = new self($this->from, $absence->from()->modify('-1 day'), $this->description());
+            $absencePart->declareAsPartial();
+
+            return $absencePart;
         }
 
-        return new self($absence->to()->modify('+1 day'), $this->to, "Part of " . $this->description());
+        $absencePart = new self($absence->to()->modify('+1 day'), $this->to, $this->description());
+        $absencePart->declareAsPartial();
+
+        return $absencePart;
     }
 
-    protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end)
+    protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end): Absence
     {
         return new self($start, $end, $this->description());
     }

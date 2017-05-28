@@ -14,6 +14,7 @@ use Niktux\Kafkaf\Domain\Absences\Filters\CollaborateurAbsenceFilterIterator;
 use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceForWeek;
 use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceDeduplicate;
 use Niktux\Kafkaf\Persistence\ReadableCollaborateurRepository;
+use Niktux\Kafkaf\Domain\Absences\Filters\AbsenceCollectiveFilterIterator;
 
 class Handler implements QueryHandler
 {
@@ -66,6 +67,9 @@ class Handler implements QueryHandler
             $dti->setISODate($year, $query->week, 1)->format('d-m-Y'),
             $dti->setISODate($year, $query->week, 5)->format('d-m-Y')
         );
+
+        $weekAbsences = AbsenceForWeek::filter($absences, $query->week);
+        $result->collectives = new AbsenceCollectiveFilterIterator($weekAbsences->getIterator(), true);
 
         return $result;
     }

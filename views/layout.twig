@@ -12,6 +12,7 @@
         {% for asset in ['vendor.scss', 'main.scss', 'css.css'] %}
             <link rel="stylesheet" type="text/css" href="{{ webpackAsset(asset) }}">
         {% endfor %}
+        <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     {% endblock %}
     {% if webpackChunkManifest is not empty %}
         <script>
@@ -20,38 +21,63 @@
         //]]>
         </script>
     {% endif %}
-    <title>Onyx</title>
+    <title>Kafkaf</title>
   </head>
 
   <body>
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse sticky-top">
+        
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Onyx</a>
+        
+        <a class="navbar-brand mr-5" href="/"><i class="em em-poop"></i> Kafkaf</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('absence.new') }}">
+                        <i class="fa fa-clock-o mr-1" aria-hidden="true"></i>
+                        Demande d'absence <span class="sr-only">(current)</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('absence.new') }}">Demande d'absence <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('collaborateur.new') }}">
+                        <i class="fa fa-user-plus mr-1" aria-hidden="true"></i>
+                        Nouveau collaborateur <span class="sr-only">(current)</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('collaborateur.new') }}">Nouveau collaborateur <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('report.cafForWeek', {'week': date('now')|date('W')|number_format}) }}">
+                        <i class="fa fa-calendar mr-1" aria-hidden="true"></i>
+                         CAF de la semaine <span class="sr-only">(current)</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('report.caf', {'from': 20, 'to': 26}) }}">CAF <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('report.cafForWeek', {'week': 21}) }}">CAF-S <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('report.caf', {'from': 20, 'to': 26}) }}">
+                        <i class="fa fa-file-excel-o mr-1" aria-hidden="true"></i>
+                        CAF <span class="sr-only">(current)</span>
+                    </a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <ul class="navbar-nav pull-xs-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle mr-1" aria-hidden="true"></i>
+                        [ userName ]
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-calendar-o mr-1" aria-hidden="true"></i>
+                            Mes absences
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-sign-out mr-1" aria-hidden="true"></i>
+                            Déconnexion
+                        </a>
+                    </div>
+                  </li>
+            </ul>
         </div>
     </nav>
     <div class="container">

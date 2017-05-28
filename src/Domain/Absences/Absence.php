@@ -11,6 +11,8 @@ interface Absence extends ConvertibleToString
     public function from(): \DateTimeImmutable;
     public function to(): \DateTimeImmutable;
 
+    public function isPartial(): bool;
+
     public function duration(): int;
     public function description(): string;
 

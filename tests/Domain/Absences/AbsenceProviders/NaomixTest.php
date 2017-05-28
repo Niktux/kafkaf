@@ -20,6 +20,12 @@ class NaomixTest extends TestCase
 
         $this->assertCount($expected, $collection);
         $this->assertSame($expectedDurationInDays, $collection->totalDuration());
+
+        foreach($collection as $absence)
+        {
+            $this->assertSame('00:00:00', $absence->from()->format('H:i:s'));
+            $this->assertSame('00:00:00', $absence->to()->format('H:i:s'));
+        }
     }
 
     public function providerTestList()

@@ -7,16 +7,16 @@ namespace Niktux\Kafkaf\Domain\Absences\Filters;
 use Niktux\Kafkaf\Domain\Absences\AbsenceCollective;
 use Niktux\Kafkaf\Domain\Absences\JourFerie;
 
-class AbsenceCollectiveFilterIterator extends \FilterIterator
+class AbsenceCollectiveFilterIterator extends \FilterIterator implements \Countable
 {
     private
-        $excludeJourFerie;
+        $keepJourFerie;
 
-    public function __construct(\Iterator $it, bool $excludeJourFerie = true)
+        public function __construct(\Iterator $it, bool $keepJourFerie = false)
     {
         parent::__construct($it);
 
-        $this->excludeJourFerie = $excludeJourFerie;
+        $this->keepJourFerie= $keepJourFerie;
     }
 
     public function accept()
@@ -28,11 +28,16 @@ class AbsenceCollectiveFilterIterator extends \FilterIterator
             return false;
         }
 
-        if($this->excludeJourFerie)
+        if($this->keepJourFerie === false)
         {
             return ! $absence instanceof JourFerie;
         }
 
         return true;
+    }
+
+    public function count(): int
+    {
+        return iterator_count($this);
     }
 }

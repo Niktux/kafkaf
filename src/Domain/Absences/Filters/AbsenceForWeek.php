@@ -9,7 +9,7 @@ use Niktux\Kafkaf\Domain\Absences\NullAbsence;
 
 class AbsenceForWeek
 {
-    public static function filter(AbsenceCollection $collection, int $week)
+    public static function filter(AbsenceCollection $collection, int $week): AbsenceCollection
     {
         $filteredCollection = new AbsenceCollection();
 

@@ -21,6 +21,8 @@ class Conge extends AbstractAbsence implements Absence
 
     public function __construct(DTO\Conge $conge)
     {
+        parent::__construct();
+
         $this->dto = $conge;
     }
 
@@ -88,7 +90,7 @@ class Conge extends AbstractAbsence implements Absence
         );
     }
 
-    protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end)
+    protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end): Absence
     {
         $dto = clone $this->dto;
         $dto->from = $start;

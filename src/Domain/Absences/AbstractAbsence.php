@@ -6,6 +6,26 @@ namespace Niktux\Kafkaf\Domain\Absences;
 
 abstract class AbstractAbsence implements Absence
 {
+    private
+        $partial;
+
+    public function __construct()
+    {
+        $this->partial = false;
+    }
+
+    public function isPartial(): bool
+    {
+        return $this->partial;
+    }
+
+    public function declareAsPartial(): self
+    {
+        $this->partial = true;
+
+        return $this;
+    }
+
     public function restrictToWeek(int $week): Absence
     {
         $fromWeek = (int) $this->from()->format('W');
@@ -44,8 +64,11 @@ abstract class AbstractAbsence implements Absence
             }
         }
 
-        return $this->extractPart($start, $end);
+        $absence = $this->extractPart($start, $end);
+        $absence->declareAsPartial();
+
+        return $absence;
     }
 
-    abstract protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end);
+    abstract protected function extractPart(\DateTimeImmutable $start, \DateTimeImmutable $end): Absence;
 }

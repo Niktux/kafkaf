@@ -6,12 +6,14 @@ namespace Niktux\Kafkaf\Domain\CQS\Queries\CAFForWeek;
 
 use Onyx\Services\CQS\QueryResult;
 use Niktux\Kafkaf\Domain\Collaborateur;
+use Niktux\Kafkaf\Domain\Absences\Filters\ExcludeAbsenceCollectiveFilterIterator;
 
 final class Result implements QueryResult
 {
     public
         $week,
-        $dates;
+        $dates,
+        $collectives;
 
     private
         $absences;
@@ -34,6 +36,7 @@ final class Result implements QueryResult
             'absences' => $absences,
             'caf' => 5 - $absencesDuration,
             'totalAbsences' => $absencesDuration,
+            'absencesPerso' => new ExcludeAbsenceCollectiveFilterIterator($absences->getIterator()),
         ];
 
         return $this;
@@ -54,5 +57,21 @@ final class Result implements QueryResult
         }
 
         return $caf;
+    }
+
+    public function maxDuration(): int
+    {
+        $max = -1;
+        foreach($this->absences as $absenceInfo)
+        {
+            $max = max($max, $absenceInfo['caf']);
+        }
+
+        return $max;
+    }
+
+    public function nbCollaborateurs(): int
+    {
+        return count($this->absences);
     }
 }

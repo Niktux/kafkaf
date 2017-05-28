@@ -78,9 +78,8 @@ class Naomix implements AbsenceProvider
             {
                 $shift = $this->isBTSWeek($w) ? 1 : 0;
 
-                $dti = new \DateTimeImmutable();
-                $from = $dti->setISODate($this->currentYear, $w, 4 - $shift);
-                $to = $dti->setISODate($this->currentYear, $w, 5 - $shift);
+                $from = $this->buildDate($w, 4 - $shift);
+                $to = $this->buildDate($w, 5 - $shift);
 
                 list($from, $to) = $this->shiftNaomixIfFerie($from, $to);
 
@@ -89,14 +88,21 @@ class Naomix implements AbsenceProvider
 
             if($this->isBTSWeek($w))
             {
-                $dti = new \DateTimeImmutable();
-                $from = $dti->setISODate($this->currentYear, $w, 5);
-                $to = $dti->setISODate($this->currentYear, $w, 5);
+                $from = $to = $this->buildDate($w, 5);
 
                 $collection->addAbsence(new AbsenceCollective($from, $to, 'BTS ' . $this->currentYear));
             }
         }
 
         return $collection;
+    }
+
+    private function buildDate(int $week, int $day): \DateTimeImmutable
+    {
+        $dt = new \DateTime();
+        $dt->setISODate($this->currentYear, $week, $day);
+        $dt->setTime(0, 0);
+
+        return \DateTimeImmutable::createFromMutable($dt);
     }
 }
